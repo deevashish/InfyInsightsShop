@@ -7,11 +7,12 @@
     "target": "es5",
     "types": [
       "jasmine",
-      "node"
+      "node", "googlemaps"
     ]
   },
   "files": [
-    "test.ts"
+    "test.ts",
+    "polyfills.ts"
   ],
   "include": [
     "**/*.spec.ts",

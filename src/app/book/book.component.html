@@ -1,0 +1,71 @@
+<!-- <mat-form-field class="example-full-width">
+  <!-- <input matInput placeholder="Search"> -->  
+    <!-- <input type="text" matInput placeholder="Search books" #new_field /> -->
+<!--    
+    <input matInput placeholder="Search books" #newfield type="text" newfield.value=''/>
+      <div class="button-group">
+    <button mat-raised-button color="primary" (click)="bookSearch(newfield.value)" ><mat-icon>Search Books</mat-icon></button>
+  </div>
+</mat-form-field> -->
+<nav class="navbar navbar-light bg-light">
+<form class="col-12">
+    <div class="form-row">
+    <input placeholder="Enter Search Text" type="text" class="form-control col-sm-9" newfield.value='' #newfield [formControl]="searchControl">    
+    <button class="col-sm-3 btn btn-outline-success my-2 my-sm-0" color="primary" (click)="bookSearch(newfield.value)" >Search Books</button>
+  </div>
+</form>
+</nav>
+<div class="button-row">
+  <a class="col-sm-2 btn btn-outline-success my-2 my-sm-0" color="secondary" (click)="addBook()"><mat-icon>Add Books</mat-icon></a>
+  <div class="h5">
+  <h5>{{message}}</h5>
+</div>
+</div>
+<div class="example-container mat-elevation-z8">
+  <table mat-table #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="isbn">
+      <th mat-header-cell *matHeaderCellDef> ISBN </th>
+      <td mat-cell *matCellDef="let element" class="isbn-col"> {{element.isbn}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Author Column -->
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef> Author </th>
+      <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell  *matHeaderCellDef > Actions </th>
+      <td mat-cell *matCellDef="let row" >
+           <button mat-button color="primary" [routerLink]="['/order/', row._id]" >Buy Now</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="preview">
+      <th mat-header-cell  *matHeaderCellDef > Preview </th>
+      <td mat-cell *matCellDef="let element" >
+           <button mat-button color="primary" routerLink="/pdf-viewer/preview/{{element.file}}">Preview</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="read">
+      <th mat-header-cell  *matHeaderCellDef > Read Book </th>
+      <!-- <td mat-cell *matCellDef="let element" class="isbn-col" #newfile newfile.value=''> {{element.file}} </td> -->
+      <td mat-cell *matCellDef="let element" >
+           <button mat-button color="primary" routerLink="/pdf-viewer/read/{{element.file}}" >Read Book</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/book-details/', row._id]"></tr>
+  </table>
+</div>

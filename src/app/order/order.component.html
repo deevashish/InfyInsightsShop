@@ -1,0 +1,33 @@
+<form [formGroup]="orderForm" (ngSubmit)="onFormSubmit(orderForm.value)" enctype="multipart/form-data">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="quantity" formControlName="quantity"
+           [errorStateMatcher]="matcher">
+    <mat-error>
+      <span *ngIf="!orderForm.get('quantity').valid && orderForm.get('quantity').touched">Please enter Quantity</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="billingAddress" formControlName="billingAddress"
+           [errorStateMatcher]="matcher">
+    <mat-error>
+      <span *ngIf="!orderForm.get('billingAddress').valid && orderForm.get('billingAddress').touched">Please enter Billing Address</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="shippingAddress" formControlName="shippingAddress"
+           [errorStateMatcher]="matcher">
+    <mat-error>
+      <span *ngIf="!orderForm.get('shippingAddress').valid && orderForm.get('shippingAddress').touched">Please enter Shipping Address</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="amount" formControlName="amount"
+           [errorStateMatcher]="matcher">
+    <mat-error>
+      <span *ngIf="!orderForm.get('amount').valid && orderForm.get('amount').touched">Please enter Amount</span>
+    </mat-error>
+  </mat-form-field>
+  <div class="button-row">
+    <button type="submit" [disabled]="!orderForm.valid" mat-raised-button color="primary"><mat-icon>Place Order</mat-icon></button>
+  </div>
+</form>

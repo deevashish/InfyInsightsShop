@@ -1,0 +1,7 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/5cd1a694-c6b8-41b1-aba9-ca15cf3a0faf/resourceGroups/appsvc_rg_linux_centralus/providers/Microsoft.Web/sites/InfyInsightsShop",
+    "appService.deploySubpath": ""
+}
