@@ -6,6 +6,7 @@ var User = require('../models/User.js');
 var Book = require('../models/Book.js');
 var multer = require('multer');
 var app = express();
+var token= require('./middleware');
 
 router.get('/', function(req, res, next) {
   
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
     });
   });
 
-router.post('/:books/:user', function(req, res, next) {  
+router.post('/:books/:user',token, function(req, res, next) {  
   // var book;
   // var user;
   // book=Book.findById(req.params.books, function (err, book) {
@@ -39,7 +40,7 @@ router.post('/:books/:user', function(req, res, next) {
     });
   });
   
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id', token, function(req, res, next) {
   Order.findByIdAndRemove(req.params.id, req.body, function (err, post) {
       if (err) return next(err);
       res.json(post);

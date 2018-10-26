@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { ApiService } from '../api.service';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 
 @Component({
@@ -15,14 +16,19 @@ export class BookComponent implements OnInit {
   books: any;
   message:string;
   displayedColumns = ['isbn', 'title', 'author', 'actions','preview','read'];
-  dataSource = new BookDataSource(this.api);
+  dataSource: any;
+  // dataSource = new BookDataSource(this.api);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private api: ApiService,private router: Router) { }
 
   ngOnInit() {
+    // this.dataSource.paginator = this.paginator;
     this.api.getBooks()
       .subscribe(res => {
         console.log(res);
         this.books = res;
+        this.dataSource = new MatTableDataSource(this.books);
+        this.dataSource.paginator = this.paginator;
       }, err => {
         console.log(err);
       });
@@ -55,6 +61,19 @@ export class BookComponent implements OnInit {
     {
       this.router.navigate(['/book-create']);
     }
+  }
+  readBook(file)
+  {
+    var data = JSON.parse(localStorage.getItem("currentUser"));
+    if(!data)
+    {
+      this.router.navigate(['/login']);
+    }
+    else
+    {
+      this.router.navigate(['/pdf-viewer/read/'+ file]);
+    }
+    // /pdf-viewer/read/{{element.file}}
   }
  
 

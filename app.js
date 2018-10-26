@@ -4,14 +4,18 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var multer = require('multer');
-
+var cookieParser = require('cookie-parser');
 var apiRouter = require('./routes/book');
 var storeRouter = require('./routes/store');
 var userRouter = require('./routes/user');
 var orderRouter = require('./routes/order');
 var fileRouter = require('./routes/file');
+
 // var router = require('./src/app/app.component');
 var app = express();
+var router = require('express').Router();
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./swagger.json');
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/InfyInsightsShop', { promiseLibrary: require('bluebird') })
@@ -19,13 +23,19 @@ mongoose.connect('mongodb://localhost/InfyInsightsShop', { promiseLibrary: requi
   .catch((err) => console.error(err));
 app.use(logger('dev'));
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, 'dist/mean-angular6')));
 // app.use('/', express.static(path.join(__dirname, 'dist/mean-angular6')));
 // app.use(express.static('InfyInsightsShop'))
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// router.use('/', swaggerUi.serve);
+// router.get('/', swaggerUi.setup(swaggerDocument));
+// apiRouter.use('/', swaggerUi.serve);
+// apiRouter.get('/', swaggerUi.setup(swaggerDocument));
 
 // app.use('/', router);
 

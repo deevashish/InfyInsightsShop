@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Book = require('../models/Book.js');
 var multer = require('multer');
 var app = express();
+var token= require('./middleware');
 
 const DIR = './uploads';
 let storage = multer.diskStorage({
@@ -44,7 +45,7 @@ Book.find({
   .catch(e => console.error(e));
 });
 /* GET SINGLE BOOK BY ID */
-router.get('/:id', function(req, res, next) {
+router.get('/:id',token, function(req, res, next) {
   Book.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -52,7 +53,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* SAVE BOOK */
-router.post('/', function(req, res, next) {  
+router.post('/',token, function(req, res, next) {  
   Book.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -60,7 +61,7 @@ router.post('/', function(req, res, next) {
 });
 
 /* UPDATE BOOK */
-router.put('/:id', function(req, res, next) {
+router.put('/:id',token, function(req, res, next) {
   Book.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
@@ -68,7 +69,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 /* DELETE BOOK */
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id',token, function(req, res, next) {
   Book.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);

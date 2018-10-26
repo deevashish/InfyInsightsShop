@@ -7,6 +7,7 @@ const schema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     role: { type: String, required: true },
+    token:{type:String},
     createdDate: { type: Date, default: Date.now }
 });
 schema.pre('save', function(next){

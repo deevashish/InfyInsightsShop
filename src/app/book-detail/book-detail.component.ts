@@ -40,8 +40,24 @@ export class BookDetailComponent implements OnInit {
     }
     
   }
+  editBook(id)
+  {
+    var data = JSON.parse(localStorage.getItem("currentUser"));
+    if(!data)
+    {
+      this.router.navigate(['/login']);
+    }
+    else if(data['role']!='admin')
+    {
+      this.message="You donot have permission to edit this book ";      
+    }
+    else
+    {
+      this.router.navigate(['/book-edit/' + id]);
+    }
+  }
   ngOnInit() {
-    this.getBookDetails(this.route.snapshot.params['id']);
+    this.getBookDetails(this.route.snapshot.params['id']);    
   }
 
 }

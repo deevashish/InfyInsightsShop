@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-master',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./master.component.css']
 })
 export class MasterComponent implements OnInit {
-
-  constructor() { }
+  welcome:string;
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    var data = JSON.parse(localStorage.getItem("currentUser"));
+    if(data)
+    {
+      this.welcome="Welcome " + data["firstName"]
+    }
+  }
+
+  logout()
+  {    
+    localStorage.removeItem("currentUser");
+    this.welcome="";
+    this.router.navigate(['/books']);
   }
 
 }
